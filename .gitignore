@@ -1,0 +1,6 @@
+node_modules
+index.cjs
+index.blob
+*.log
+index.exe
+_assets.json

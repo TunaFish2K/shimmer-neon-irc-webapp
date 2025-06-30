@@ -1,0 +1,9 @@
+{
+    "main": "index.cjs",
+    "output": "index.blob",
+    "assets": {
+        "_assets.json": "./_assets.json",
+        "index.html": "./public/index.html",
+        "index.js": "./public/index.js"
+    }
+}

@@ -1,0 +1,41 @@
+{
+  "name": "shimmer-irc-webpage",
+  "version": "0.1.0",
+  "description": "Web App for Shimmer IRC",
+  "keywords": [
+    "IRC",
+    "Express"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TunaFish2K/shimmer-irc-webapp.git"
+  },
+  "license": "MIT",
+  "author": "TunaFish2K",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon --exec node index.js",
+    "clean": "del index.cjs index.blob index.exe",
+    "cjs": "rollup -c",
+    "build-script": "node build.js",
+    "make-blob": "node --experimental-sea-config sea-config.json",
+    "make-bin": "node -e \"require('fs').copyFileSync(process.execPath, 'index.exe')\"",
+    "inject": "npx postject index.exe NODE_SEA_BLOB index.blob ` --sentinel-fuse NODE_SEA_FUSE_fce680ab2cc467b6e072b8b5df1996b2",
+    "build": "npm run clean && npm run cjs && npm run build-script && npm run make-blob && npm run make-bin && npm run inject"
+  },
+  "dependencies": {
+    "@types/morgan": "^1.9.10",
+    "express": "^5.1.0",
+    "morgan": "^1.10.0",
+    "shimmer-neon-irc": "^0.1.0"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^28.0.6",
+    "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-node-resolve": "^16.0.1",
+    "@types/node": "^24.0.7",
+    "nodemon": "^3.1.10",
+    "rollup": "^4.44.1"
+  }
+}
