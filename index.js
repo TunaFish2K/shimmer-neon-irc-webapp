@@ -134,10 +134,6 @@ app.post("/start", express.json(), (req, res) => {
             console.error(error);
             create();
         });
-
-        states.irc.addEventListener("close", () => {
-            create();
-        });
     }
 
     create();
