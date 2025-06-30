@@ -2,7 +2,7 @@ import ShimmerIRC, { createNodeStreams } from "shimmer-neon-irc";
 import express from "express";
 import { Socket } from "net";
 import morgan from "morgan";
-
+import open from "open";
 import sea from "node:sea";
 import { readFileSync } from "fs";
 import { readFile } from "fs/promises";
@@ -13,7 +13,7 @@ const HOST = "ld.frp.one";
 const PORT = 12783;
 
 const isSea = sea.isSea();
-const assets = JSON.parse(isSea ? sea.getAsset("_assets.json", "utf8") : readFileSync("package.json")).assets;
+const assets = JSON.parse(isSea ? sea.getAsset("_assets.json", "utf8") : readFileSync("sea-config.json")).assets;
 
 /**
  * 
@@ -208,6 +208,9 @@ async function registerAssetAsStatic(key, url, contentType) {
 prepareStatics().then(() => {
     const server = app.listen(process.env["APP_PORT"] ?? undefined, process.env["APP_HOST"] ?? "127.0.0.1", () => {
         const { address, port } = server.address();
-        console.log(`listening, visit \`http://${address}:${port}/public/index.html\`.`);
+        const url = `http://${address}:${port}/public/index.html`;
+
+        console.log(`listening, visit \`${url}\``);
+        open(url);
     });
 });

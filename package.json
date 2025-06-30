@@ -28,6 +28,7 @@
     "@types/morgan": "^1.9.10",
     "express": "^5.1.0",
     "morgan": "^1.10.0",
+    "open": "^10.1.2",
     "shimmer-neon-irc": "^0.1.0"
   },
   "devDependencies": {
