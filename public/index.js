@@ -111,7 +111,6 @@ async function main() {
         ev.preventDefault();
         const message = messageInput.value;
         messageInput.value = "";
-        console.log("send");
         try {
             const result = await fetch("/send", {
                 method: "POST",
