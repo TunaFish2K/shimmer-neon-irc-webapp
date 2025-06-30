@@ -107,8 +107,10 @@ async function main() {
         }
     }
 
-    sendButton.addEventListener("click", async () => {
+    sendButton.addEventListener("click", async (ev) => {
+        ev.preventDefault();
         const message = messageInput.value;
+        messageInput.value = "";
         console.log("send");
         try {
             const result = await fetch("/send", {
