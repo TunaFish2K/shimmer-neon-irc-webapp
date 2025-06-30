@@ -1,7 +1,7 @@
 {
-  "name": "shimmer-irc-webpage",
+  "name": "shimmer-neon-irc-webapp",
   "version": "0.1.0",
-  "description": "Web App for Shimmer IRC",
+  "description": "Web App for Shimmer Neon IRC",
   "keywords": [
     "IRC",
     "Express"
