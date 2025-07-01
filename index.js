@@ -132,7 +132,7 @@ app.post("/start", express.json(), (req, res) => {
 
         states.irc.addEventListener("error", (ev) => {
             console.error(ev.detail);
-            setTimeout(create(), 100);
+            setTimeout(create, 100);
         });
     }
 
