@@ -4,7 +4,7 @@ import { Socket } from "net";
 import morgan from "morgan";
 import open from "open";
 import sea from "node:sea";
-import { readFileSync } from "fs";
+import { readFileSync, stat } from "fs";
 import { readFile } from "fs/promises";
 
 const DEV_MODE = process.env["APP_DEV"] == "true";
@@ -114,25 +114,25 @@ app.post("/start", express.json(), (req, res) => {
             verbose: DEV_MODE
         });
         states.irc.start();
-        states.irc.addEventListener("message", (data) => {
-            states.messages.push(Object.assign({ type: "message" }, data.detail));
+        states.irc.addEventListener("message", (ev) => {
+            states.messages.push(Object.assign({ type: "message" }, ev.detail));
         });
-        states.irc.addEventListener("playerLeave", (data) => {
+        states.irc.addEventListener("playerLeave", (ev) => {
             states.messages.push({
-                player: data.detail,
+                player: ev.detail,
                 type: "playerLeave"
             });
         });
-        states.irc.addEventListener("playerJoin", (data) => {
+        states.irc.addEventListener("playerJoin", (ev) => {
             states.messages.push({
-                player: data.detail,
+                player: ev.detail,
                 type: "playerJoin"
             });
         });
 
-        states.irc.addEventListener("error", (error) => {
-            console.error(error);
-            create();
+        states.irc.addEventListener("error", (ev) => {
+            console.error(ev.detail);
+            setTimeout(create(), 100);
         });
     }
 
