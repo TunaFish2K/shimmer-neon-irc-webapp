@@ -9,7 +9,7 @@ import { readFile } from "fs/promises";
 
 const DEV_MODE = process.env["APP_DEV"] == "true";
 
-const HOST = "ld.frp.one";
+const HOST = "xg-2.frp.one";
 const PORT = 12783;
 
 const isSea = sea.isSea();

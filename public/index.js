@@ -4,6 +4,82 @@ function isScrolledToBottom(element) {
     return Math.abs(element.scrollHeight - element.scrollTop - element.clientHeight) <= 1;
 }
 
+const COLORS = {
+    "0": "#000000",
+    "1": "#0000AA",
+    "2": "#00AA00",
+    "3": "#00AAAA",
+    "4": "#AA0000",
+    "5": "#AA00AA",
+    "6": "#FFAA00",
+    "7": "#AAAAAA",
+    "8": "#555555",
+    "9": "#5555FF",
+    "a": "#55FF55",
+    "b": "#55FFFF",
+    "c": "#FF5555",
+    "d": "#FF55FF",
+    "e": "#FFFF55",
+    "f": "#FFFFFF"
+};
+
+/**
+ * 
+ * @param { HTMLDivElement } message 
+ */
+function parseMessageWithColor(message) {
+    /**
+     * @type { HTMLDivElement[] }
+     */
+    const elements = [];
+    const chars = message.split("").reverse();
+    const wordChars = [];
+    /**
+     * @type { string }
+     */
+    let color = "";
+
+    function pushElement() {
+        if (wordChars.length > 0) {
+            const word = wordChars.join("");
+            const element = document.createElement("div");
+            console.log(color);
+            element.style = `color: ${color}; white-space: pre;`;
+            element.textContent = word;
+            elements.push(element);
+            wordChars.length = 0;
+        }
+    }
+
+    function foundFormat(char) {
+        if (char == "r") {
+            char = "f";
+        }
+        if (Object.hasOwn(COLORS, char) && color != COLORS[char]) {
+            pushElement();
+            color = COLORS[char];
+            console.log(char, COLORS[char]);
+        }
+    }
+
+    foundFormat("f");
+
+    while (chars.length > 0) {
+        const char = chars.pop();
+        if (char == "\u00a7") {
+            foundFormat(chars.pop());
+        } else {
+            wordChars.push(char);
+        }
+    }
+    pushElement();
+    const messageElement = document.createElement("div");
+    messageElement.style = "display: flex; flex-direction: row;"
+    console.log(elements);
+    elements.forEach(element => messageElement.appendChild(element));
+    return messageElement;
+}
+
 async function main() {
     console.log("loaded");
     /**
@@ -235,11 +311,7 @@ async function main() {
                     seperatorElement.textContent = ">";
                     nodes.push(seperatorElement);
 
-                    const messageElement = document.createElement("div");
-                    messageElement.className = "content";
-                    console.log(message);
-                    messageElement.textContent = message.message;
-                    nodes.push(messageElement);
+                    nodes.push(parseMessageWithColor(message.message));
                 } else {
                     const playerActivityElement = document.createElement("div");
                     playerActivityElement.className = message.type === "playerJoin" ? "join" : "leave";
@@ -249,7 +321,10 @@ async function main() {
 
                 const element = document.createElement("div");
                 element.className = "messageDiv";
-                nodes.forEach(node => element.appendChild(node));
+                nodes.forEach(node => {
+                    console.log(nodes);
+                    element.appendChild(node);
+                });
 
                 output(element);
             });
