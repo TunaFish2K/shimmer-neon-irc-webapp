@@ -27,7 +27,7 @@ const COLORS = {
  * 
  * @param { HTMLDivElement } message 
  */
-function parseMessageWithColor(message) {
+function parseTextWithColor(message) {
     /**
      * @type { HTMLDivElement[] }
      */
@@ -253,9 +253,7 @@ async function main() {
                 const messageNodes = [];
 
                 players.forEach((player, index) => {
-                    const playerElement = document.createElement("div");
-                    playerElement.className = "player";
-                    playerElement.textContent = player;
+                    const playerElement = parseTextWithColor(player);
                     messageNodes.push(playerElement);
                     if (index < players.length - 1) {
                         console.log(index, players, players.length);
@@ -300,9 +298,7 @@ async function main() {
             messages.forEach(message => {
                 const nodes = [];
 
-                const playerElement = document.createElement("div");
-                playerElement.className = "player";
-                playerElement.textContent = message.player;
+                const playerElement = parseTextWithColor(message.player);
                 nodes.push(playerElement);
 
                 if (message.type === "message") {
@@ -311,7 +307,7 @@ async function main() {
                     seperatorElement.textContent = ">";
                     nodes.push(seperatorElement);
 
-                    nodes.push(parseMessageWithColor(message.message));
+                    nodes.push(parseTextWithColor(message.message));
                 } else {
                     const playerActivityElement = document.createElement("div");
                     playerActivityElement.className = message.type === "playerJoin" ? "join" : "leave";
